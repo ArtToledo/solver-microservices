@@ -1,10 +1,26 @@
 import { Module } from '@nestjs/common';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+
 import { ApiGatewayController } from './api-gateway.controller';
-import { ApiGatewayService } from './api-gateway.service';
+
+const RABBITMQ_URL =
+  process.env.RABBITMQ_URL || 'amqp://localhost@rabbitmq:5672';
 
 @Module({
-  imports: [],
+  imports: [
+    ClientsModule.register([
+      {
+        name: 'QUESTIONS_SERVICE',
+        transport: Transport.RMQ,
+        options: { urls: [RABBITMQ_URL], queue: 'questions_queue' },
+      },
+      {
+        name: 'ANSWERS_SERVICE',
+        transport: Transport.RMQ,
+        options: { urls: [RABBITMQ_URL], queue: 'answers_queue' },
+      },
+    ]),
+  ],
   controllers: [ApiGatewayController],
-  providers: [ApiGatewayService],
 })
 export class ApiGatewayModule {}

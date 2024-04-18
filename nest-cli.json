@@ -1,14 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/solver-microservices/src",
-  "compilerOptions": {
-    "deleteOutDir": true,
-    "webpack": true,
-    "tsConfigPath": "apps/solver-microservices/tsconfig.app.json"
-  },
+  "sourceRoot": "apps/api-gateway/src",
   "monorepo": true,
-  "root": "apps/solver-microservices",
+  "root": "apps/api-gateway",
   "projects": {
     "api-gateway": {
       "type": "application",

@@ -1,0 +1,15 @@
+FROM node:alpine
+
+WORKDIR /usr/src/app
+
+COPY package.json /usr/src/app
+
+RUN npm install
+RUN apk update && \
+  apk --no-cache add --virtual builds-deps build-base python3
+
+ADD . /usr/src/app
+
+RUN npm run build
+
+CMD ["node", "dist/apps/questions/main"]
